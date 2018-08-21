@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Incluir Novo', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Inclur Novo', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -31,7 +31,26 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'nome',
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
+            ['class' => 'yii\grid\ActionColumn',
+             'template' => '{view} {editar} {excluir}',
+              'buttons'=>[
+                    'editar' => function ($url, $model) { 
+                        return Html::a('Editar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']);
+                    },
+                    'excluir' => function ($url, $model) { 
+                        return Html::a('Exluir', ['delete', 'id' => $model->id], [
+                            'class' => 'btn btn-danger',
+                            'data' => [
+                                'confirm' => 'Deseja realmente excluir o registro?',
+                                'method' => 'post',
+                            ],
+                        ]);
+                    }
+                ],     
+
+            ],
+
+        ],  
     ]); ?>
 </div>
+
